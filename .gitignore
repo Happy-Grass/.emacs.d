@@ -1,11 +1,9 @@
-# Compiled
-*.elc
-
-# Packaging
-.cask
-
-# Backup files
-*~
-
-# Undo-tree save-files
-*.~undo-tree
+# 忽略文件夹下所有文件
+/*
+#
+!/.gitignore
+!README.md
+!LICENSE
+!init.el
+!/lisp/*.el
+!/rime/*.yaml
