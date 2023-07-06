@@ -7,4 +7,6 @@
 !init.el
 !early-init.el
 !/lisp
+!/rime
+/rime/*
 !/rime/*.yaml
