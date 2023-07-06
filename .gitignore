@@ -5,5 +5,6 @@
 !README.md
 !LICENSE
 !init.el
-!/lisp/*.el
+!early-init.el
+!/lisp
 !/rime/*.yaml
