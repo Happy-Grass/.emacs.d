@@ -9,7 +9,7 @@
  :font (font-spec :name "SauceCodePro NF"
                   :weight 'normal
                   :slant 'normal
-                  :size 12.5))
+                  :size 12.5)) ;;好像小数会有问题
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
   (set-fontset-font
    (frame-parameter nil 'font)

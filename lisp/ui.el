@@ -24,18 +24,52 @@
 (require 'vs-modeline)
 (vs-modeline-mode)
 
-;;显示行号
-;;(setq display-line-numbers-current-absolute t)
+;; Mouse & Smooth Scroll
+;; Scroll one line at a time (less "jumpy" than defaults)
+(when (display-graphic-p)
+  (setq mouse-wheel-scroll-amount '(1 ((shift) . hscroll))
+        mouse-wheel-scroll-amount-horizontal 1
+        mouse-wheel-progressive-speed nil))
+(setq scroll-step 1
+      scroll-margin 0
+      scroll-conservatively 100000
+      auto-window-vscroll nil
+      scroll-preserve-screen-position t)
 
-;;(defun vmacs-change-line-number-abs()
- ;; (setq display-line-numbers 'absolute))
-;;(defun vmacs-change-line-number-relative()
- ;; (setq display-line-numbers 'visual))
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
-;;(add-hook 'evil-insert-state-entry-hook 'vmacs-change-line-number-abs)
-;;(add-hook 'evil-normal-state-entry-hook 'vmacs-change-line-number-relative)
-;;(add-hook 'evil-motion-state-entry-hook 'vmacs-change-line-number-relative)
+;; Good pixel line scrolling
+(if (fboundp 'pixel-scroll-precision-mode)
+    (pixel-scroll-precision-mode t)
+  (when (and emacs/>=27p (not sys/macp))
+    (use-package good-scroll
+      :hook (after-init . good-scroll-mode)
+      :bind (([remap next] . good-scroll-up-full-screen)
+             ([remap prior] . good-scroll-down-full-screen)))))
 
+(use-package nerd-icons
+  :ensure t
+  :demand t
+  )
+    
+;; Smooth scrolling over images
+(use-package iscroll
+  :ensure t
+  :hook (image-mode . iscroll-mode))
+
+;; Use fixed pitch where it's sensible
+(use-package mixed-pitch
+  :ensure t)
+
+;; Show line numbers
+(use-package display-line-numbers
+  :ensure nil
+  :hook ((prog-mode yaml-mode conf-mode) . display-line-numbers-mode)
+  :init (setq display-line-numbers-width-start t))
+
+(use-package time
+  
+  :ensure nil
+  :init (setq display-time-24hr-format t
+              display-time-day-and-date t))
 (provide 'ui)
 ;;; ui.el ends here
 

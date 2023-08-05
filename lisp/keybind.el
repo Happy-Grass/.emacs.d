@@ -22,7 +22,9 @@ _f_: init  _d_: directory
   ("d" open-init-dir :exit t)
 )
 (global-set-key (kbd "<f2>") 'hydra-init/body)
-
+(global-set-key (kbd "<f12>") 'org-agenda)
+(global-set-key (kbd "<f11>") 'org-clock-goto)
+(global-set-key (kbd "C-<f11>") 'org-clock-in)
 
 ;;字体放大与缩小
 (defhydra hydra-zoom (:hint nil)
@@ -40,8 +42,8 @@ _i_: increase  _o_: decrease
   "
 _c_: char _w_: word
 "
-  ("c" evil-avy-goto-char :exit t)
-  ("w" evil-avy-goto-word0 :exit t)
+  ("c" avy-goto-char :exit t)
+  ("w" avy-goto-word-1 :exit t)
 )
 (leader-def
   :keymaps 'normal
@@ -57,7 +59,7 @@ _c_: char _w_: word
 _f_: find        _c_:capture      _i_: insert      _j_: id-create
 _t_: tag-add     _a_: tag-remove  _s_: alias-add   _h_: alias-remove
 _I_: ref-insert  _e_: ref-add     _m_: ref-remove  _x_: ref-find
-_u_: ui          _r_: org-ref     _d_: dailies     _b_: buffer
+_u_: toggle-ui   _r_: org-ref     _d_: dailies     _b_: buffer
 _n_: xfw-refile
 _q_: quit
 "
@@ -65,7 +67,7 @@ _q_: quit
   ("I" orb-insert-link :exit t)
   ("f" org-roam-node-find :exit t)
   ("b" org-roam-buffer-toggle :exit t)
-  ("u" org-roam-ui-open :exit t)
+  ("u" org-roam-ui-mode :exit t)
   ("c" org-roam-capture :exit t)
   ("x" org-roam-ref-find :exit t)
   ("d" org-roam-dailies-capture-today :exit t)
@@ -174,6 +176,44 @@ _p_: replace-word _r_: replace-region _c_: capture
 (leader-def
   :keymaps 'normal
   "t" 'hydra-tools/body)
+
+
+(defhydra hydra-org-insert (:hint nil)
+  "
+_i_: link  _d_: drawer      _h_: heading    _s_: subheading
+_e_: item  _t_: struc-temp  _o_: todo-head  _q_: quit
+_O_: todo-head-res-cont     _S_: todo-subhead
+"
+  ("i" org-insert-link :exit t)
+  ("d" org-insert-drawer :exit t)
+  ("h" org-insert-heading :exit t)
+  ("s" org-insert-subheading :exit t)
+  ("e" org-insert-item :exit t)
+  ("t" org-insert-structure-template :exit t)
+  ("o" org-insert-todo-heading :exit t)
+  ("O" org-insert-todo-heading-respect-content :exit t)
+  ("S" org-insert-todo-subheading :exit t)
+  ("q" nil :exit t)
+  )
+
+(defhydra hydra-orgmode (:hint nil)
+  "
+_a_: agenda     _d_: display-img   _i_: insert
+_s_: schedule   _t_: todo          _o_: open
+_n_: deadline   _c_: checkitem     _q_: exit "
+  ("a" org-agenda :exit t)
+  ("i" hydra-org-insert/body :exit t)
+  ("d" org-display-inline-images :exit t)
+  ("o" org-open-at-point :exit t)
+  ("t" org-todo :exit t)
+  ("s" org-schedule :exit t)
+  ("n" org-deadline :exit t)
+  ("c" org-toggle-checkbox :exit t )
+  ("q" nil :exit t)
+  )
+(leader-def
+  :keymaps 'normal
+  "m" 'hydra-orgmode/body)
 (provide 'keybind)
 ;;; keybind.el ends here
 

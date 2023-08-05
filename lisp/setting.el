@@ -11,5 +11,7 @@
 (setq-default fill-column 80) ;;当某行的长度大于70个字符时，再次输入文字会自动添加到下一行
 (setq user-full-name "xfw")
 (setq user-mail-address "xfwahss@qq.com")
+(setq initial-major-mode 'fundamental-mode)
+(setq inhibit-compacting-font-caches t);;缓存字体信息，提高启动速度
 (provide 'setting)
 ;;; setting.el ends here
